@@ -1,0 +1,33 @@
+.contactCard {
+  border: 1px solid black;
+  padding: 16px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.highlighted {
+  border-color: blue;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  color: gold;
+  margin-right: 8px;
+}
+
+.content {
+  margin-top: 8px;
+}
+
+.actions {
+  margin-top: 16px;
+  text-align: right;
+}
+
+.actions button {
+  margin-left: 8px;
+}
