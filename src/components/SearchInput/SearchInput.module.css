@@ -1,0 +1,18 @@
+.searchInputContainer {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  width: 95%;
+  @media (min-width: 768px) {
+    width: 60%;
+  }
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  padding-left: 10px;
+  flex-grow: 1;
+}

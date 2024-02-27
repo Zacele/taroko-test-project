@@ -1,94 +1,67 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import AppHeader from '@/components/Header/Header';
+import styles from './page.module.css';
+import SearchInput from '@/components/SearchInput/SearchInput';
+import ToggleFavorite from '@/components/ToggleFavorite/ToggleFavorite';
+import SortOrderSelect from '@/components/SortOrderSelect/SortOrderSelect';
+import Card from '@/components/Card/Card';
+
+const cards = [
+  {
+    id: 1,
+    first_name: 'Luke',
+    last_name: 'Skywalker',
+    job: 'Jedi knight',
+    description: 'Son of Anakin Skywalker',
+  },
+  {
+    id: 2,
+    first_name: 'Obi-Wan',
+    last_name: 'Kenobi',
+    job: 'Jedi master',
+    description: 'Old Ben was trained by Qui-Gon Jinn',
+  },
+  {
+    id: 3,
+    first_name: 'Han',
+    last_name: 'Solo',
+    job: 'Smuggler',
+    description: 'Partnered with a famous Wookie',
+  },
+  {
+    id: 4,
+    first_name: 'Leia',
+    last_name: 'Organa',
+    job: 'Princess',
+    description: "Luke's secret twin sister",
+  },
+  {
+    id: 5,
+    first_name: 'Darth',
+    last_name: 'Vader',
+    job: 'Sith lord',
+    description: 'I am your father!',
+  },
+];
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+      <AppHeader text="Contact List" />
+      <SearchInput />
+      <div className={styles.sortingWrapper}>
+        <ToggleFavorite />
+        <SortOrderSelect />
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className={styles['cards-wrapper']}>
+        {cards.map((card, index) => (
+          <Card
+            key={index}
+            name={card.first_name + ' ' + card.last_name}
+            job={card.job}
+            description={card.description}
+            isHighlighted={Math.random() > 0.5}
+          />
+        ))}
       </div>
     </main>
   );
