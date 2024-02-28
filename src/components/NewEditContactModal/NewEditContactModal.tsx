@@ -1,18 +1,29 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Button from '../Button/Button';
 import styles from './NewEditContactModal.module.css';
 import TextField from '@mui/material/TextField';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postCreateContact } from '@/api';
-import { ContactPayload } from '@/interface';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { postCreateContact, getContactById, updateContactById } from '@/api';
+import { ContactPayload, GetContactByIdResponseType } from '@/interface';
+import { useModal } from '@/context';
 
 const NewContactModal: React.FC = () => {
-  const [open, setOpen] = React.useState(false);
+  const { isOpen, closeModal, selectedId, isEdit } = useModal();
   const queryClient = useQueryClient();
-  const { register, handleSubmit, reset } = useForm<ContactPayload>();
+
+  const { data: contactData, isLoading } = useQuery<
+    GetContactByIdResponseType,
+    Error
+  >({
+    queryKey: ['contact', selectedId],
+    queryFn: () => getContactById(selectedId as number),
+    enabled: isEdit && selectedId !== null,
+  });
+
+  const { register, handleSubmit, reset, setValue } = useForm<ContactPayload>();
   const { mutate: createContact } = useMutation<any, Error, ContactPayload>({
     mutationFn: postCreateContact,
     onSuccess: () => {
@@ -22,19 +33,51 @@ const NewContactModal: React.FC = () => {
     onError: (error) => console.error('Error:', error),
   });
 
-  const openModal = () => setOpen(true);
+  useEffect(() => {
+    if (contactData) {
+      setValue('first_name', isEdit ? contactData.data.first_name : '');
+      setValue('last_name', isEdit ? contactData.data.last_name : '');
+      setValue('job', isEdit ? contactData.data.job : '');
+      setValue('description', isEdit ? contactData.data.description : '');
+    }
+  }, [contactData, isEdit]);
+
+  const { mutate: updateContact } = useMutation<
+    any,
+    Error,
+    { id: number; contact: ContactPayload }
+  >({
+    mutationFn: updateContactById,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contacts'] });
+      handleClose();
+    },
+    onError: (error) => console.error('Error:', error),
+  });
+
+  React.useEffect(() => {
+    if (contactData) {
+      reset(contactData.data);
+    }
+  }, [contactData]);
+
   const handleClose = () => {
-    setOpen(false);
+    closeModal();
     reset();
   };
 
-  const onSubmit = (data: ContactPayload) => createContact(data);
+  const onSubmit = (data: ContactPayload) => {
+    if (isEdit) {
+      updateContact({ id: selectedId as number, contact: data });
+      return;
+    }
+    createContact(data);
+  };
 
   return (
     <React.Fragment>
-      <Button onClick={openModal}>Add new contact</Button>
       <Modal
-        open={open}
+        open={isOpen}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"

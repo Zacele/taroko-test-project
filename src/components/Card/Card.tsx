@@ -1,23 +1,20 @@
 'use client';
 import React from 'react';
 import styles from './Card.module.css';
-
-export interface CardProps {
-  name: string;
-  job?: string;
-  description?: string;
-  isHighlighted?: boolean;
-  onDelete?: () => void;
-}
+import Button from '../Button/Button';
+import { useModal } from '@/context';
+import { CardProps } from '@/interface';
 
 const Card: React.FC<CardProps> = ({
   name,
   job,
   description,
   isHighlighted,
+  id,
 }) => {
+  const { openEditModal } = useModal();
   const onEdit = () => {
-    console.log('Edit');
+    openEditModal(id);
   };
   const onDelete = () => {
     console.log('Delete');
@@ -35,8 +32,10 @@ const Card: React.FC<CardProps> = ({
         <p>Description: {description}</p>
       </div>
       <div className={styles.actions}>
-        <button onClick={onEdit}>Edit</button>
-        <button onClick={onDelete}>Delete</button>
+        <Button onClick={onEdit}>Edit</Button>
+        <Button variant="danger" onClick={onDelete}>
+          Delete
+        </Button>
       </div>
     </div>
   );
