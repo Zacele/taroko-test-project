@@ -4,8 +4,8 @@ import styles from './Card.module.css';
 
 export interface CardProps {
   name: string;
-  job: string;
-  description: string;
+  job?: string;
+  description?: string;
   isHighlighted?: boolean;
   onDelete?: () => void;
 }

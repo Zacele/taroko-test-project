@@ -1,15 +1,35 @@
 'use client';
 import React from 'react';
-import Typography from '@mui/material/Typography';
+import { useForm } from 'react-hook-form';
 import Modal from '@mui/material/Modal';
 import Button from '../Button/Button';
 import styles from './NewEditContactModal.module.css';
 import TextField from '@mui/material/TextField';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { postCreateContact } from '@/api';
+import { ContactPayload } from '@/interface';
 
 const NewContactModal: React.FC = () => {
   const [open, setOpen] = React.useState(false);
+  const queryClient = useQueryClient();
+  const { register, handleSubmit, reset } = useForm<ContactPayload>();
+  const { mutate: createContact } = useMutation<any, Error, ContactPayload>({
+    mutationFn: postCreateContact,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contacts'] });
+      handleClose();
+    },
+    onError: (error) => console.error('Error:', error),
+  });
+
   const openModal = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    reset();
+  };
+
+  const onSubmit = (data: ContactPayload) => createContact(data);
+
   return (
     <React.Fragment>
       <Button onClick={openModal}>Add new contact</Button>
@@ -21,34 +41,38 @@ const NewContactModal: React.FC = () => {
       >
         <div className={styles.modalContainer}>
           <h2 id="modal-modal-title">Contact Details</h2>
-          <div className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <TextField
               required
+              autoComplete="off"
               label="First Name"
               variant="outlined"
-              name="first_name"
               className={styles.textField}
+              {...register('first_name')}
             />
             <TextField
-              required
+              autoComplete="off"
               label="Last Name"
               variant="outlined"
-              name="last_name"
               className={styles.textField}
+              {...register('last_name')}
             />
             <TextField
               required
+              autoComplete="off"
               label="Job"
               variant="outlined"
-              name="job"
               className={styles.textField}
+              {...register('job')}
             />
             <TextField
               label="Description"
               variant="outlined"
-              name="description"
               multiline
-              rows={4}
+              autoComplete="off"
+              required
+              rows={3}
+              {...register('description')}
               className={styles.textField}
             />
             <div className={styles.buttonGroup}>
@@ -59,7 +83,7 @@ const NewContactModal: React.FC = () => {
                 Save
               </Button>
             </div>
-          </div>
+          </form>
         </div>
       </Modal>
     </React.Fragment>
