@@ -4,6 +4,7 @@ import SearchInput from '@/components/SearchInput/SearchInput';
 import ToggleFavorite from '@/components/ToggleFavorite/ToggleFavorite';
 import SortOrderSelect from '@/components/SortOrderSelect/SortOrderSelect';
 import Card from '@/components/Card/Card';
+import NewEditContactModal from '@/components/NewEditContactModal/NewEditContactModal';
 
 const cards = [
   {
@@ -53,13 +54,14 @@ export default function Home() {
         <SortOrderSelect />
       </div>
       <div className={styles['cards-wrapper']}>
+        <NewEditContactModal />
         {cards.map((card, index) => (
           <Card
             key={index}
             name={card.first_name + ' ' + card.last_name}
             job={card.job}
             description={card.description}
-            isHighlighted={Math.random() > 0.5}
+            isHighlighted={index % 2 === 0}
           />
         ))}
       </div>
