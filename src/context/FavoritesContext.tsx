@@ -11,6 +11,8 @@ import Cookies from 'js-cookie';
 type FavoritesContextType = {
   favorites: number[];
   toggleFavorite: (id: number) => void;
+  favoritesFilterOn: boolean;
+  setFavoritesFilterOn: (value: boolean) => void;
 };
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(
@@ -26,7 +28,7 @@ const FAVORITES_COOKIE_NAME = 'favorites';
 export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({
   children,
 }) => {
-  // Initialize state with empty array or from cookies
+  const [favoritesFilterOn, setFavoritesFilterOn] = useState(false);
   const [favorites, setFavorites] = useState<number[]>(() => {
     const cookieValue = Cookies.get(FAVORITES_COOKIE_NAME);
     return cookieValue ? JSON.parse(cookieValue) : [];
@@ -51,7 +53,14 @@ export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({
   };
 
   return (
-    <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
+    <FavoritesContext.Provider
+      value={{
+        favorites,
+        toggleFavorite,
+        favoritesFilterOn,
+        setFavoritesFilterOn,
+      }}
+    >
       {children}
     </FavoritesContext.Provider>
   );

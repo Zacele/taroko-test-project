@@ -19,7 +19,7 @@ type Card = {
 
 const CardsLayout: React.FC = () => {
   const { openModal } = useModal();
-  const { favorites } = useFavorites();
+  const { favorites, favoritesFilterOn } = useFavorites();
   const {
     isLoading,
     error,
@@ -35,16 +35,30 @@ const CardsLayout: React.FC = () => {
   return (
     <>
       <Button onClick={openModal}>Add new contact</Button>
-      {contactData?.data.map((card) => (
-        <Card
-          id={card.id}
-          key={card.id}
-          name={card.first_name + ' ' + card.last_name ?? ''}
-          job={card.job}
-          description={card.description}
-          isHighlighted={favorites.includes(card.id)}
-        />
-      ))}
+      {!favoritesFilterOn &&
+        contactData?.data.map((card) => (
+          <Card
+            id={card.id}
+            key={card.id}
+            name={card.first_name + ' ' + card.last_name ?? ''}
+            job={card.job}
+            description={card.description}
+            isHighlighted={favorites.includes(card.id)}
+          />
+        ))}
+      {favoritesFilterOn &&
+        contactData?.data
+          .filter((item) => favorites.includes(item.id))
+          .map((card) => (
+            <Card
+              id={card.id}
+              key={card.id}
+              name={card.first_name + ' ' + card.last_name ?? ''}
+              job={card.job}
+              description={card.description}
+              isHighlighted={favorites.includes(card.id)}
+            />
+          ))}
     </>
   );
 };

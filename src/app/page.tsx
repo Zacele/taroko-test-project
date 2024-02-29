@@ -27,22 +27,22 @@ export default async function Home() {
     <main className={styles.main}>
       <AppHeader text="Contact List" />
       <SearchInput />
-      <div className={styles.sortingWrapper}>
-        <ToggleFavorite />
-        <SortOrderSelect />
-      </div>
-      <div className={styles['cards-wrapper']}>
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <ModalProvider>
-            <SnackbarProvider>
-              <FavoritesProvider>
+      <FavoritesProvider>
+        <div className={styles.sortingWrapper}>
+          <ToggleFavorite />
+          <SortOrderSelect />
+        </div>
+        <div className={styles['cards-wrapper']}>
+          <HydrationBoundary state={dehydrate(queryClient)}>
+            <ModalProvider>
+              <SnackbarProvider>
                 <NewEditContactModal />
                 <CardsLayout />
-              </FavoritesProvider>
-            </SnackbarProvider>
-          </ModalProvider>
-        </HydrationBoundary>
-      </div>
+              </SnackbarProvider>
+            </ModalProvider>
+          </HydrationBoundary>
+        </div>
+      </FavoritesProvider>
     </main>
   );
 }
