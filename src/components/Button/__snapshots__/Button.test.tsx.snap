@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button applies variant classes correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="button default"
+  >
+    Default Button
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button applies variant classes correctly 2`] = `
+<DocumentFragment>
+  <button
+    class="button secondary"
+  >
+    Secondary Button
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button applies variant classes correctly 3`] = `
+<DocumentFragment>
+  <button
+    class="button success"
+  >
+    Success Button
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button applies variant classes correctly 4`] = `
+<DocumentFragment>
+  <button
+    class="button danger"
+  >
+    Danger Button
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button handles onClick event 1`] = `
+<DocumentFragment>
+  <button
+    class="button default"
+  >
+    Click Me
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button has fluid class when fluid prop is true 1`] = `
+<DocumentFragment>
+  <button
+    class="button fluid default"
+  >
+    Fluid Button
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button is disabled when disabled prop is true 1`] = `
+<DocumentFragment>
+  <button
+    class="button default"
+    disabled=""
+  >
+    Disabled Button
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button renders with children 1`] = `
+<DocumentFragment>
+  <button
+    class="button default"
+  >
+    Click Me
+  </button>
+</DocumentFragment>
+`;

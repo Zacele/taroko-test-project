@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card Component calls deleteContactById on delete button click and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="contactCard"
+  >
+    <div
+      class="header"
+    >
+      <span
+        class="star"
+      >
+        ★
+      </span>
+      <h2>
+        Obi-wan Kenobi
+      </h2>
+    </div>
+    <div
+      class="content"
+    >
+      <p>
+        Job: Frienemies with Anakin.
+      </p>
+      <p>
+        Description: In pain.
+      </p>
+    </div>
+    <div
+      class="actions"
+    >
+      <button
+        class="button default"
+      >
+        Edit
+      </button>
+      <button
+        class="button danger"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Card Component calls openEditModal on edit button click and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="contactCard"
+  >
+    <div
+      class="header"
+    >
+      <span
+        class="star"
+      >
+        ★
+      </span>
+      <h2>
+        John Doe
+      </h2>
+    </div>
+    <div
+      class="content"
+    >
+      <p>
+        Job: Developer
+      </p>
+      <p>
+        Description: Writes code.
+      </p>
+    </div>
+    <div
+      class="actions"
+    >
+      <button
+        class="button default"
+      >
+        Edit
+      </button>
+      <button
+        class="button danger"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Card Component renders Card with provided props and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="contactCard"
+  >
+    <div
+      class="header"
+    >
+      <span
+        class="star"
+      >
+        ★
+      </span>
+      <h2>
+        Yoda
+      </h2>
+    </div>
+    <div
+      class="content"
+    >
+      <p>
+        Job: Master Jedi
+      </p>
+      <p>
+        Description: Stay in the hut.
+      </p>
+    </div>
+    <div
+      class="actions"
+    >
+      <button
+        class="button default"
+      >
+        Edit
+      </button>
+      <button
+        class="button danger"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SortOrderSelect renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <select
+    class="select"
+  >
+    <option
+      value="desc"
+    >
+      A-Z
+    </option>
+    <option
+      value="asc"
+    >
+      Z-A
+    </option>
+  </select>
+</DocumentFragment>
+`;

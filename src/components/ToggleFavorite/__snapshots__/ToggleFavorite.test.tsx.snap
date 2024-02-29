@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ToggleFavorite renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <button
+    class="button"
+  >
+    <span
+      class="star"
+    >
+      ★
+    </span>
+    Favorites
+  </button>
+</DocumentFragment>
+`;
