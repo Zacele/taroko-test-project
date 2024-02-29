@@ -43,3 +43,5 @@ export interface CardProps {
   id: number;
   isHighlighted: boolean;
 }
+
+export type SortingOrderType = 'asc' | 'desc';

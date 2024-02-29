@@ -3,26 +3,15 @@
 import React from 'react';
 import styles from './SearchInput.module.css';
 import SearchIcon from '@mui/icons-material/Search';
-import { useQueryClient } from '@tanstack/react-query';
-import { GetContactsResponseType } from '@/interface';
-import { searchByName } from '@/utils';
 import debounce from 'lodash/debounce';
+import { useSearch } from '@/context/SearchContext';
 
 const SearchInput: React.FC = () => {
-  const queryClient = useQueryClient();
-  const currentData = queryClient.getQueryData<GetContactsResponseType>([
-    'contacts',
-  ]);
+  const { setSearchQuery } = useSearch();
 
   const onInputChange = debounce(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      queryClient.setQueryData(
-        ['contacts'],
-        (oldData: GetContactsResponseType) => ({
-          ...oldData,
-          data: searchByName(currentData?.data ?? [], event.target.value),
-        }),
-      );
+      setSearchQuery(event.target.value);
     },
     300,
   );

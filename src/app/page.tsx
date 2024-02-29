@@ -14,6 +14,8 @@ import CardsLayout from '@/client-side-components/CardsLayout';
 import { ModalProvider } from '@/context/ModalContext';
 import { SnackbarProvider } from '@/context/SnackbarContext';
 import { FavoritesProvider } from '@/context/FavoritesContext';
+import { SortingProvider } from '@/context/SortingContext';
+import { SearchProvider } from '@/context/SearchContext';
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -26,23 +28,27 @@ export default async function Home() {
   return (
     <main className={styles.main}>
       <AppHeader text="Contact List" />
-      <SearchInput />
-      <FavoritesProvider>
-        <div className={styles.sortingWrapper}>
-          <ToggleFavorite />
-          <SortOrderSelect />
-        </div>
-        <div className={styles['cards-wrapper']}>
-          <HydrationBoundary state={dehydrate(queryClient)}>
-            <ModalProvider>
-              <SnackbarProvider>
-                <NewEditContactModal />
-                <CardsLayout />
-              </SnackbarProvider>
-            </ModalProvider>
-          </HydrationBoundary>
-        </div>
-      </FavoritesProvider>
+      <SearchProvider>
+        <SearchInput />
+        <FavoritesProvider>
+          <SortingProvider>
+            <div className={styles.sortingWrapper}>
+              <ToggleFavorite />
+              <SortOrderSelect />
+            </div>
+            <div className={styles['cards-wrapper']}>
+              <HydrationBoundary state={dehydrate(queryClient)}>
+                <ModalProvider>
+                  <SnackbarProvider>
+                    <NewEditContactModal />
+                    <CardsLayout />
+                  </SnackbarProvider>
+                </ModalProvider>
+              </HydrationBoundary>
+            </div>
+          </SortingProvider>
+        </FavoritesProvider>
+      </SearchProvider>
     </main>
   );
 }
