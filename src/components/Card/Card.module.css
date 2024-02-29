@@ -15,8 +15,13 @@
 }
 
 .star {
-  color: gold;
+  color: grey;
   margin-right: 8px;
+  cursor: pointer;
+}
+
+.isHighlight {
+  color: gold;
 }
 
 .content {

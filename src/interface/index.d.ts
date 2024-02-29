@@ -39,7 +39,7 @@ export interface CardProps {
   name: string;
   job?: string;
   description?: string;
-  isHighlighted?: boolean;
   onDelete?: () => void;
   id: number;
+  isHighlighted: boolean;
 }

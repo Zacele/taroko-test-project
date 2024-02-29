@@ -5,7 +5,7 @@ import styles from './SearchInput.module.css';
 import SearchIcon from '@mui/icons-material/Search';
 import { useQueryClient } from '@tanstack/react-query';
 import { GetContactsResponseType } from '@/interface';
-import { searchByName } from '@/functions';
+import { searchByName } from '@/utils';
 import debounce from 'lodash/debounce';
 
 const SearchInput: React.FC = () => {

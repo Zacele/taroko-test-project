@@ -13,6 +13,7 @@ import { getContacts } from '@/api';
 import CardsLayout from '@/client-side-components/CardsLayout';
 import { ModalProvider } from '@/context/ModalContext';
 import { SnackbarProvider } from '@/context/SnackbarContext';
+import { FavoritesProvider } from '@/context/FavoritesContext';
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -34,8 +35,10 @@ export default async function Home() {
         <HydrationBoundary state={dehydrate(queryClient)}>
           <ModalProvider>
             <SnackbarProvider>
-              <NewEditContactModal />
-              <CardsLayout />
+              <FavoritesProvider>
+                <NewEditContactModal />
+                <CardsLayout />
+              </FavoritesProvider>
             </SnackbarProvider>
           </ModalProvider>
         </HydrationBoundary>

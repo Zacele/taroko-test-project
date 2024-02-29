@@ -7,14 +7,17 @@ import { CardProps } from '@/interface';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteContactById } from '@/api';
 import { useSnackbar } from '@/context/SnackbarContext';
+import clsx from 'clsx';
+import { useFavorites } from '@/context/FavoritesContext';
 
 const Card: React.FC<CardProps> = ({
   name,
   job,
   description,
-  isHighlighted,
   id,
+  isHighlighted,
 }) => {
+  const { toggleFavorite } = useFavorites();
   const queryClient = useQueryClient();
   const { showSnackbar } = useSnackbar();
   const { mutate: deleteContact } = useMutation<any, Error, number>({
@@ -35,13 +38,30 @@ const Card: React.FC<CardProps> = ({
   };
 
   const onDelete = () => deleteContact(id);
+  const updateFavorites = () => {
+    toggleFavorite(id);
+    if (isHighlighted) {
+      showSnackbar('Contact removed from favorites', 'success');
+      return;
+    }
+    showSnackbar('Contact added to favorites', 'success');
+  };
 
   return (
     <div
-      className={`${styles.contactCard} ${isHighlighted ? styles.highlighted : ''}`}
+      className={clsx(styles.contactCard, {
+        [styles.highlighted]: isHighlighted,
+      })}
     >
       <div className={styles.header}>
-        {isHighlighted && <span className={styles.star}>★</span>}
+        <span
+          onClick={updateFavorites}
+          className={clsx(styles.star, {
+            [styles.isHighlight]: isHighlighted,
+          })}
+        >
+          ★
+        </span>
         <h2>{name}</h2>
       </div>
       <div className={styles.content}>

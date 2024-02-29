@@ -1,11 +1,13 @@
 'use client';
 import { getContacts } from '@/api';
 import Button from '@/components/Button/Button';
-import Card from '@/components/Card/Card';
+import { useFavorites } from '@/context/FavoritesContext';
 import { useModal } from '@/context/ModalContext';
 import { GetContactsResponseType } from '@/interface';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import dynamic from 'next/dynamic';
+const Card = dynamic(() => import('@/components/Card/Card'), { ssr: false });
 
 type Card = {
   id: number;
@@ -17,6 +19,7 @@ type Card = {
 
 const CardsLayout: React.FC = () => {
   const { openModal } = useModal();
+  const { favorites } = useFavorites();
   const {
     isLoading,
     error,
@@ -39,7 +42,7 @@ const CardsLayout: React.FC = () => {
           name={card.first_name + ' ' + card.last_name ?? ''}
           job={card.job}
           description={card.description}
-          isHighlighted={card.id % 2 === 0}
+          isHighlighted={favorites.includes(card.id)}
         />
       ))}
     </>
