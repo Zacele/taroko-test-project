@@ -60,4 +60,22 @@ const updateContactById = async ({
   }
 };
 
-export { getContacts, postCreateContact, getContactById, updateContactById };
+const deleteContactById = async (
+  id: number,
+): Promise<CreateContactResponseType> => {
+  try {
+    const { data } = await axiosInstance.delete(`api/contacts/${id}`);
+    return data;
+  } catch (error) {
+    console.error('Error adding data:', error);
+    throw error;
+  }
+};
+
+export {
+  getContacts,
+  postCreateContact,
+  getContactById,
+  updateContactById,
+  deleteContactById,
+};

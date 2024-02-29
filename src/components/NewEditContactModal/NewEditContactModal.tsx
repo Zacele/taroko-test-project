@@ -8,10 +8,12 @@ import TextField from '@mui/material/TextField';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { postCreateContact, getContactById, updateContactById } from '@/api';
 import { ContactPayload, GetContactByIdResponseType } from '@/interface';
-import { useModal } from '@/context';
+import { useModal } from '@/context/ModalContext';
+import { useSnackbar } from '@/context/SnackbarContext';
 
 const NewContactModal: React.FC = () => {
   const { isOpen, closeModal, selectedId, isEdit } = useModal();
+  const { showSnackbar } = useSnackbar();
   const queryClient = useQueryClient();
 
   const { data: contactData, isLoading } = useQuery<
@@ -28,9 +30,13 @@ const NewContactModal: React.FC = () => {
     mutationFn: postCreateContact,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contacts'] });
+      showSnackbar('Contact created', 'success');
       handleClose();
     },
-    onError: (error) => console.error('Error:', error),
+    onError: (error) => {
+      showSnackbar(`Error update contact: ${error}`, 'error');
+      console.error('Error:', error);
+    },
   });
 
   useEffect(() => {
@@ -50,9 +56,13 @@ const NewContactModal: React.FC = () => {
     mutationFn: updateContactById,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contacts'] });
+      showSnackbar('Contact updated', 'success');
       handleClose();
     },
-    onError: (error) => console.error('Error:', error),
+    onError: (error) => {
+      showSnackbar(`Error update contact: ${error}`, 'error');
+      console.error('Error:', error);
+    },
   });
 
   React.useEffect(() => {
@@ -79,8 +89,7 @@ const NewContactModal: React.FC = () => {
       <Modal
         open={isOpen}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby={isEdit ? 'edit-contact-modal' : 'create-contact-modal'}
       >
         <div className={styles.modalContainer}>
           <h2 id="modal-modal-title">Contact Details</h2>

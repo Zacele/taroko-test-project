@@ -2,7 +2,7 @@
 import { getContacts } from '@/api';
 import Button from '@/components/Button/Button';
 import Card from '@/components/Card/Card';
-import { useModal } from '@/context';
+import { useModal } from '@/context/ModalContext';
 import { GetContactsResponseType } from '@/interface';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';

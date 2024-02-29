@@ -11,7 +11,8 @@ import {
 } from '@tanstack/react-query';
 import { getContacts } from '@/api';
 import CardsLayout from '@/client-side-components/CardsLayout';
-import { ModalProvider } from '@/context';
+import { ModalProvider } from '@/context/ModalContext';
+import { SnackbarProvider } from '@/context/SnackbarContext';
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -32,8 +33,10 @@ export default async function Home() {
       <div className={styles['cards-wrapper']}>
         <HydrationBoundary state={dehydrate(queryClient)}>
           <ModalProvider>
-            <NewEditContactModal />
-            <CardsLayout />
+            <SnackbarProvider>
+              <NewEditContactModal />
+              <CardsLayout />
+            </SnackbarProvider>
           </ModalProvider>
         </HydrationBoundary>
       </div>
