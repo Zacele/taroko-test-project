@@ -3,13 +3,22 @@ import {
   CreateContactResponseType,
   GetContactsResponseType,
   GetContactByIdResponseType,
+  ContactType,
 } from '@/interface';
 import axiosInstance from './axios.instance';
 
 const getContacts = async (): Promise<GetContactsResponseType> => {
   try {
     const { data } = await axiosInstance.get('api/contacts');
-    return data;
+    const sortedFromAtoZ = {
+      ...data,
+      data: data.data.sort((a: ContactType, b: ContactType) => {
+        const nameA = `${a.first_name} ${a.last_name}`.toLowerCase();
+        const nameB = `${b.first_name} ${b.last_name}`.toLowerCase();
+        return nameA.localeCompare(nameB);
+      }),
+    };
+    return sortedFromAtoZ;
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;

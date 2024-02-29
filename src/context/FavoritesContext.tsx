@@ -35,7 +35,6 @@ export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({
   });
 
   useEffect(() => {
-    // Update cookie whenever favorites change
     Cookies.set(FAVORITES_COOKIE_NAME, JSON.stringify(favorites), {
       expires: 7,
     });

@@ -7,19 +7,13 @@ import { GetContactsResponseType } from '@/interface';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import dynamic from 'next/dynamic';
+import { useSearch } from '@/context/SearchContext';
 const Card = dynamic(() => import('@/components/Card/Card'), { ssr: false });
-
-type Card = {
-  id: number;
-  first_name?: string;
-  last_name?: string;
-  job?: string;
-  description?: string;
-};
 
 const CardsLayout: React.FC = () => {
   const { openModal } = useModal();
   const { favorites, favoritesFilterOn } = useFavorites();
+  const { filterContacts } = useSearch();
   const {
     isLoading,
     error,
@@ -32,33 +26,23 @@ const CardsLayout: React.FC = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>An error occurred: {error.message}</div>;
 
+  const filteredContacts = filterContacts(contactData?.data ?? []).filter(
+    (card) => !favoritesFilterOn || favorites.includes(card.id),
+  );
+
   return (
     <>
       <Button onClick={openModal}>Add new contact</Button>
-      {!favoritesFilterOn &&
-        contactData?.data.map((card) => (
-          <Card
-            id={card.id}
-            key={card.id}
-            name={card.first_name + ' ' + card.last_name ?? ''}
-            job={card.job}
-            description={card.description}
-            isHighlighted={favorites.includes(card.id)}
-          />
-        ))}
-      {favoritesFilterOn &&
-        contactData?.data
-          .filter((item) => favorites.includes(item.id))
-          .map((card) => (
-            <Card
-              id={card.id}
-              key={card.id}
-              name={card.first_name + ' ' + card.last_name ?? ''}
-              job={card.job}
-              description={card.description}
-              isHighlighted={favorites.includes(card.id)}
-            />
-          ))}
+      {filteredContacts.map((card) => (
+        <Card
+          id={card.id}
+          key={card.id}
+          name={`${card.first_name} ${card.last_name ?? ''}`}
+          job={card.job}
+          description={card.description}
+          isHighlighted={favorites.includes(card.id)}
+        />
+      ))}
     </>
   );
 };
