@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { useSearch } from '@/context/SearchContext';
+
 const Card = dynamic(() => import('@/components/Card/Card'), { ssr: false });
 
 const CardsLayout: React.FC = () => {
@@ -33,16 +34,20 @@ const CardsLayout: React.FC = () => {
   return (
     <>
       <Button onClick={openModal}>Add new contact</Button>
-      {filteredContacts.map((card) => (
-        <Card
-          id={card.id}
-          key={card.id}
-          name={`${card.first_name} ${card.last_name ?? ''}`}
-          job={card.job}
-          description={card.description}
-          isHighlighted={favorites.includes(card.id)}
-        />
-      ))}
+      {filteredContacts.length === 0 ? (
+        <div>These are not the droids you've been looking for 🤖</div>
+      ) : (
+        filteredContacts.map((card) => (
+          <Card
+            id={card.id}
+            key={card.id}
+            name={`${card.first_name} ${card.last_name ?? ''}`}
+            job={card.job}
+            description={card.description}
+            isHighlighted={favorites.includes(card.id)}
+          />
+        ))
+      )}
     </>
   );
 };

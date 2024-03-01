@@ -11,9 +11,8 @@ interface Option {
 }
 
 const SortOrderSelect: React.FC = () => {
-  const { order, setOrder } = useSortingContext();
+  const { setOrder } = useSortingContext();
   const queryClient = useQueryClient();
-  const [sortOrder, setSortOrder] = React.useState<SortingOrderType>(order);
   const options: Option[] = [
     { value: 'desc', label: 'A-Z' },
     { value: 'asc', label: 'Z-A' },
@@ -21,7 +20,6 @@ const SortOrderSelect: React.FC = () => {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newOrder = event.target.value as SortingOrderType;
-    setSortOrder(newOrder);
     setOrder(newOrder);
 
     queryClient.setQueryData(
@@ -43,12 +41,7 @@ const SortOrderSelect: React.FC = () => {
   };
 
   return (
-    <select
-      value={sortOrder}
-      onChange={handleSelectChange}
-      className={styles.select}
-      defaultValue={sortOrder}
-    >
+    <select onChange={handleSelectChange} className={styles.select}>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}

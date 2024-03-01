@@ -3,8 +3,8 @@
 import React from 'react';
 import styles from './SearchInput.module.css';
 import SearchIcon from '@mui/icons-material/Search';
-import debounce from 'lodash/debounce';
 import { useSearch } from '@/context/SearchContext';
+import { debounce } from '@/utils';
 
 const SearchInput: React.FC = () => {
   const { setSearchQuery } = useSearch();
