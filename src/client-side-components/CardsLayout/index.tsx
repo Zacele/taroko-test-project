@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { useSearch } from '@/context/SearchContext';
+
 const Card = dynamic(() => import('@/components/Card/Card'), { ssr: false });
 
 const CardsLayout: React.FC = () => {
