@@ -33,16 +33,20 @@ const CardsLayout: React.FC = () => {
   return (
     <>
       <Button onClick={openModal}>Add new contact</Button>
-      {filteredContacts.map((card) => (
-        <Card
-          id={card.id}
-          key={card.id}
-          name={`${card.first_name} ${card.last_name ?? ''}`}
-          job={card.job}
-          description={card.description}
-          isHighlighted={favorites.includes(card.id)}
-        />
-      ))}
+      {filteredContacts.length === 0 ? (
+        <div>These are not the droids you've been looking for 🤖</div>
+      ) : (
+        filteredContacts.map((card) => (
+          <Card
+            id={card.id}
+            key={card.id}
+            name={`${card.first_name} ${card.last_name ?? ''}`}
+            job={card.job}
+            description={card.description}
+            isHighlighted={favorites.includes(card.id)}
+          />
+        ))
+      )}
     </>
   );
 };

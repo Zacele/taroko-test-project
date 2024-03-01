@@ -35,12 +35,10 @@ export const SnackbarProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (snackPack.length && !currentSnackbar) {
-      // Take the first snackbar from the snack pack and show it
       setCurrentSnackbar({ ...snackPack[0] });
       setSnackPack((prev) => prev.slice(1));
       setOpen(true);
     } else if (snackPack.length && currentSnackbar && open) {
-      // Close the current snackbar to show the next one
       setOpen(false);
     }
   }, [snackPack, currentSnackbar, open]);

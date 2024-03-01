@@ -39,7 +39,9 @@ export default async function Home() {
             <div className={styles['cards-wrapper']}>
               <HydrationBoundary state={dehydrate(queryClient)}>
                 <ModalProvider>
+                  {/* MUI Provider*/}
                   <SnackbarProvider>
+                    {/* MUI Provider*/}
                     <NewEditContactModal />
                     <CardsLayout />
                   </SnackbarProvider>
