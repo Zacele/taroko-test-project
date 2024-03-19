@@ -16,10 +16,7 @@ const NewContactModal: React.FC = () => {
   const { showSnackbar } = useSnackbar();
   const queryClient = useQueryClient();
 
-  const { data: contactData, isLoading } = useQuery<
-    GetContactByIdResponseType,
-    Error
-  >({
+  const { data: contactData } = useQuery<GetContactByIdResponseType, Error>({
     queryKey: ['contact', selectedId],
     queryFn: () => getContactById(selectedId as number),
     enabled: isEdit && selectedId !== null,
@@ -40,7 +37,7 @@ const NewContactModal: React.FC = () => {
   });
 
   useEffect(() => {
-    if (contactData) {
+    if (contactData && isEdit) {
       setValue('first_name', isEdit ? contactData.data.first_name : '');
       setValue('last_name', isEdit ? contactData.data.last_name : '');
       setValue('job', isEdit ? contactData.data.job : '');
@@ -72,8 +69,13 @@ const NewContactModal: React.FC = () => {
   }, [contactData]);
 
   const handleClose = () => {
+    reset({
+      first_name: '',
+      last_name: '',
+      job: '',
+      description: '',
+    });
     closeModal();
-    reset();
   };
 
   const onSubmit = (data: ContactPayload) => {
